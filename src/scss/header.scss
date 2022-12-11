@@ -1,0 +1,406 @@
+// !блок с меню
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden; // добавил для работы параллакса
+
+    &__parallax {
+        position: absolute;
+        left: -10%;
+        top: -10%;
+        width: 120%;
+        height: 120%;
+        z-index: -1;
+        background: url(../img/Rectangle\ 26.jpg);
+        background-size: cover;
+
+        @media (max-aspect-ratio: 3/2) {
+            background-position: 20% top; // данный медиазапрос нужен чтобы при узкой ширине экрана (меньше соотношения 3/2) не исчезало изображение human.png. В результате картинка меняет позиционирование и остается в поле зрения
+        }
+    }
+
+    // ниже добавочный код от меня, чтобы все влезало. марджины в макете большие слишком
+    .container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &:after {
+        position: absolute;
+        content: "";
+        display: block;
+        background-color: #fff;
+        width: 100%;
+        height: 0.5px;
+        bottom: 0;
+        top: 105px;
+        opacity: 30%;
+    }
+
+    &__flex {
+        height: 105px;
+        @extend %flexSpaceB;
+    }
+
+    &__logo {
+        width: 153px;
+    }
+
+    &__img {
+        max-width: 100%;
+    }
+
+    // кнопки социальных сетей
+    &__social {
+        @extend %flexSpaceB;
+
+        @media screen and (max-width: 968px) {
+            display: none;
+        }
+    }
+
+    &__icon {
+        display: block;
+
+        &_youtube {
+            width: 36px;
+            height: 20px;
+            background: url("../img/icons/icons.svg#you_b") no-repeat center center;
+        }
+
+        &_vk {
+            width: 36px;
+            height: 36px;
+            background: url("../img/icons/icons.svg#vk_b") no-repeat center center;
+        }
+    }
+}
+
+.menu {
+    @extend %flexCenter;
+    // margin-bottom: 200px;
+
+    &__icon {
+        display: none;
+
+        @media screen and (max-width: 968px) {
+            // оформление menu-icon
+            display: block;
+            cursor: pointer;
+            width: 30px;
+            height: 18px;
+            z-index: 5;
+            width: 30px;
+            height: 18px;
+
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+            // рисуем три полоски
+
+            span {
+                background-color: #fff;
+                width: 100%;
+                height: 1px;
+                position: absolute;
+                top: 8px;
+                left: 0;
+
+                &:first-child {
+                    top: 0;
+                }
+
+                &:last-child {
+                    top: auto;
+                    bottom: 0;
+                }
+            }
+
+            // рисуем крестик при нажатии
+
+            &._active {
+                span:nth-child(2) {
+                    transform: scale(0) translate(0px, -50%); // убираем среднюю линию когда нажимаем на menu__icon
+                }
+                span:nth-child(1) {
+                    top: 50%;
+                    transform: rotate(-45deg) translate(0px, -50%);
+                }
+                span:nth-child(3) {
+                    top: 50%;
+                    transform: rotate(45deg) translate(0px, -50%);
+                }
+            }
+        }
+    }
+
+    &__body {
+        @media screen and (max-width: 968px) {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            z-index: 4; // это от меня чтобы стрелочка для проигрывания видео (дальше по коду страницы) не была видна
+            padding: 150px 0 0 0;
+
+            transition: left 0.3s ease 0.1s;
+            background-color: #8d86c9;
+            overflow: hidden;
+
+            &._active {
+                left: 0;
+            }
+        }
+    }
+
+    &__list {
+        @extend %flexCenter;
+
+        li {
+            position: relative; // с его помощью будем позиционировать подменю
+            padding-right: 40px;
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        @media screen and (max-width: 968px) {
+            flex-direction: column;
+
+            li {
+                padding-right: 0;
+                padding-bottom: 20px;
+
+                a {
+                    font-size: 20px;
+                }
+
+                &:last-child {
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+
+    &__link {
+        font-family: Gilroy;
+        font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        color: #fff;
+    }
+
+    &__sublist {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        z-index: 100; // от меня- чтобы в тач режиме было видно. Потому что меню в в тач режиме имеет само по себе  z-index высокий
+        padding: 15px;
+        margin: 0;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate(0, 10%);
+        transition: all 0.3s ease;
+    }
+
+    // ниже стрелка-треугольник для выпадающего меню
+    &__arrow {
+        display: inline-block; // добавка от меня, чтобы стрелка была сбоку ссылки меню а не снизу
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 10px solid white;
+        transition: transform 0.3s ease 0s;
+        margin: 0 0 0 5px;
+    }
+
+    &__list > li._active {
+        .menu__sublist {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(0px, 0px);
+            pointer-events: all;
+        }
+
+        .menu__arrow {
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+//! header title
+
+.header {
+    &__title {
+        width: 636px;
+        height: 201px;
+        font-size: 48px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #fff;
+
+        @media screen and (max-width: 629px) {
+            width: 90%;
+        }
+
+        @media screen and (max-width: 323px) {
+            font-size: 30px;
+        }
+    }
+}
+
+//! header video
+
+.video {
+    display: flex;
+    flex-wrap: wrap;
+    &__button {
+        width: 80px;
+        height: 80px;
+        @include brd(white);
+        border-radius: 50%;
+        @extend %flexCenter;
+        margin-right: 110px;
+
+        @media screen and (max-width: 271px) {
+            margin-right: 0;
+        }
+    }
+
+    &__inner {
+        position: relative; // для псевдоэлемента
+        width: 64px;
+        height: 64px;
+        background-color: $violetC;
+        border-radius: 50%;
+
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 8px solid transparent;
+            border-left: 10px solid white;
+            border-top: 8px solid transparent;
+            left: calc(32px - 4px);
+            top: calc(32px - 5px);
+        }
+    }
+
+    &__text {
+        align-self: center;
+        font-family: $fontfamily;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+
+        @media screen and (max-width: 381px) {
+            padding-top: 50px;
+        }
+    }
+}
+
+//! header__row
+
+.header {
+    &__row {
+        @extend %flexSpaceB;
+    }
+}
+.column {
+    background-color: $violetC;
+    width: 315px;
+    height: 151px;
+    padding: 50px 30px;
+    position: relative;
+
+    &._active {
+        background-color: red; // стиль для подсветки при делегировании
+    }
+
+    @media screen and (max-width: 1122px) {
+        width: 250px;
+        height: 120px;
+        padding: 20px 10px;
+    }
+
+    @media screen and (max-height: 532px) {
+        display: none;
+    }
+
+    @media screen and (max-width: 643px) {
+        display: none;
+    }
+}
+.item {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+
+    &__top {
+        font-size: 18px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        margin-bottom: 17px;
+
+        @media screen and (max-width: 1122px) {
+            margin-bottom: 7px;
+        }
+    }
+
+    &__bottom {
+        font-size: 24px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+        background: url("../img/strelka.png") center center;
+        background-size: cover;
+        position: absolute;
+        top: 72px;
+        right: 35px;
+
+        @media screen and (max-width: 1122px) {
+            top: 35px;
+            right: 15px;
+        }
+    }
+}

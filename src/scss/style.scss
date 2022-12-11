@@ -1,0 +1,683 @@
+@import "fonts";
+
+$fontfamily: Gilroy; // задать свой
+
+// обнуляем стили
+@import "nullstyle.scss";
+
+// шаблоны и переменные
+
+@import "templates";
+
+// стили слайдера
+
+@import "../../../node_modules/swiper/swiper-bundle"; // эту ссылку вставил сам, потому что по умолчанию свайпер не подтягивает стили через импорт в js
+
+body {
+    &._lock {
+        overflow: hidden; // чтобы убрать полосу прокрутки для адаптивного меню
+    }
+}
+
+//! футер всегда внизу и ограничиваюий контейнер
+
+.wrapper {
+    overflow: hidden;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .content {
+        flex: 1 1 auto;
+
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+}
+
+.container {
+    max-width: 1296px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+// хедер
+
+@import "header";
+
+//
+
+.main {
+    background-color: #fff;
+    padding: 150px 0;
+
+    @media screen and (max-width: 1275px) {
+        padding: 100px 0;
+    }
+
+    @media screen and (max-width: 825px) {
+        padding: 50px 0;
+    }
+
+    &__flex {
+        @extend %flexColumnSB;
+
+        > div {
+            margin-bottom: 150px;
+
+            @media screen and (max-width: 1275px) {
+                margin-bottom: 80px;
+            }
+        }
+    }
+}
+
+// ! corts
+
+.corts {
+    width: 100%; // наследуем ширину контейнера .container чтобы сработал код flex: 0 1 33%;
+
+    &__row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -12px;
+        justify-content: center;
+    }
+
+    &__element {
+        flex: 0 1 33.3333%;
+        padding: 0 12px;
+
+        @media screen and (max-width: 1242px) {
+            flex: 0 1 50%;
+            max-width: 416px;
+
+            &:last-child {
+                padding-top: 24px;
+            }
+        }
+
+        @media screen and (max-width: 825px) {
+            flex: 0 1 100%;
+
+            &:nth-child(2) {
+                padding-top: 24px;
+            }
+        }
+    }
+}
+
+.card {
+    height: 500px;
+    padding: 25px 20px;
+    @include brd(#f7ece1);
+    overflow: hidden;
+
+    position: relative; // чтобы расположить псевдоэлемент при ховере
+
+    @media screen and (max-width: 414px) {
+        // на узких экранах размер контейнера будет подстраиваться под размер его содержимого, которое само сжимается (изображение)
+        height: auto;
+    }
+
+    &__img {
+        // ниже стили для адаптива картинки
+        position: relative;
+        overflow: hidden;
+        padding: 0 0 127% 0;
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__text {
+        position: absolute;
+        top: auto;
+        bottom: -100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 100%;
+        padding: 18px 10px;
+
+        font-size: 27px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: center;
+        color: #fff;
+
+        transition: bottom 0.5s ease 0.1s;
+
+        @media screen and (max-width: 414px) {
+            font-size: 18px;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $violetC;
+
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity, visibility 0.3s ease 0.3s;
+        }
+    }
+
+    &:hover {
+        .card__text {
+            bottom: 0;
+
+            &:after {
+                opacity: 0.5;
+                visibility: visible;
+            }
+        }
+    }
+}
+
+// ! sportclub
+
+.sportclub {
+    position: relative;
+    width: 636px;
+    height: 654px;
+    flex-grow: 0;
+    margin: 0 0 150px 440px;
+    padding: 4.5rem 3.5rem 5rem 9rem;
+    background-color: #f7ece1;
+
+    transition: transform 0.8s ease 0.1s;
+    transform: translate(0, 50%);
+
+    @media screen and (max-width: 1172px) {
+        height: 500px;
+        margin: 0 0 0 350px;
+        padding: 15px 15px 15px 100px;
+    }
+
+    @media screen and (max-width: 992px) {
+        margin: 0 auto;
+        padding: 18px;
+    }
+
+    &__header {
+        font-size: 36px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #333;
+    }
+
+    &__content {
+        @extend %textStyle;
+        padding-bottom: 35px;
+    }
+
+    &__listheader {
+        font-size: 21px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #333;
+        padding-bottom: 25px;
+    }
+
+    &__list {
+        padding-left: 30px;
+        li {
+            list-style-type: square;
+            color: $violetC;
+
+            margin-bottom: 1em;
+            span {
+                @extend %textStyle;
+            }
+        }
+    }
+
+    &__img {
+        position: absolute;
+        top: 70px;
+        right: 550px;
+        width: 526px;
+
+        @media screen and (max-width: 1172px) {
+            width: 400px;
+        }
+
+        @media screen and (max-width: 992px) {
+            display: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+// !couches
+
+.couches {
+    // две строчки ниже чтобы заработал swiper в среде flex
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 150px;
+    &__title {
+        @extend %titleText;
+
+        transform: translate(-90%, 0);
+        transition: transform 0.8s ease 0.3s;
+    }
+
+    &__slider {
+    }
+}
+.swiper-wrapper {
+}
+.swiper-slide {
+}
+.slide {
+    &__container {
+    }
+
+    &__row {
+        @extend %flexColumn;
+        position: relative; // для псевдолемента с рамкой
+        &:after {
+            position: absolute;
+            content: "";
+            width: 196px;
+            height: 240px;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+            @include brd(#f7ece1);
+        }
+
+        transition: transform 1.5s linear 0.3s;
+
+        &:hover {
+            transform: rotateY(360deg);
+        }
+    }
+
+    &__img {
+        width: 166px;
+        margin-bottom: 25px;
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &__title {
+        font-size: 21px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: center;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    &__text {
+        width: 196px;
+        @extend %textStyle;
+        text-align: center;
+    }
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    width: 45px;
+    height: 45px;
+    flex-grow: 0;
+    margin: 0 15px 0 0;
+    padding: 7px;
+    background-color: #8d86c9;
+    &:after {
+        transform: scale(0.5);
+        color: #fff;
+    }
+}
+
+.swiper-button-prev {
+    position: absolute;
+    top: 15px;
+    right: 65px;
+    left: auto;
+}
+.swiper-button-next {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    left: auto;
+}
+
+.text {
+}
+
+// !bottom
+
+.bottom {
+    // здесь и ниже мы пишем width: 100%; только чтобы заработал space between во флексе
+
+    width: 100%;
+
+    &__container {
+        width: 100%;
+    }
+
+    &__row {
+        width: 100%;
+        @extend %flexSpaceB;
+        flex-wrap: wrap;
+        @media screen and (max-width: 1090px) {
+            // @extend %flexColumnSB;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            > div {
+                align-self: center;
+            }
+        }
+    }
+}
+
+//! prices
+.prices {
+    &__title {
+        @extend %titleText;
+    }
+
+    &__row {
+        @extend %flexColumnSB;
+        height: 330px;
+    }
+
+    &__tabs {
+    }
+
+    @media screen and (max-width: 1090px) {
+        margin-bottom: 50px;
+    }
+}
+.tab {
+    width: 526px;
+    background-color: $violetC;
+    padding: 15.5px 30px;
+    position: relative; // чтобы разместить стрелочку
+
+    &__name {
+        font-size: 21px;
+        font-stretch: normal;
+        font-style: normal;
+        // line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #fff;
+    }
+
+    &__arrow {
+        border-right: 3px solid white;
+        border-bottom: 3px solid white;
+        height: 9px;
+        width: 9px;
+        transform: rotate(-45deg) translate(0, -50%);
+        color: #fff;
+        // центрируем
+        position: absolute;
+        right: 1em;
+        top: 50%;
+        transition: transform 0.8s ease 0.3s;
+
+        &._active {
+            transform: rotate(45deg);
+        }
+    }
+
+    // двигаем табы вниз если появляется сабтаб
+    transition: margin-top 0.8s ease 0.3s;
+    &._active {
+        margin-top: 188px;
+        // transform: translate(0, 240px);
+    }
+}
+
+.subtab {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: -300%;
+    z-index: -4;
+    transition: top 0.8s ease 0.3s, z-index 0.9s ease 0.3s;
+
+    &._active {
+        top: 100%;
+        z-index: 4;
+    }
+
+    &__links {
+        background-color: #fff;
+        padding: 15.5px 30px;
+        @include brd($violetC);
+        color: $violetC;
+    }
+}
+
+//! services
+
+.services {
+    // две строчки снизу для работы слайдера swiper
+    // width: 50%;
+    min-width: 0;
+
+    &__title {
+        @extend %titleText;
+    }
+
+    &__container {
+        width: 636px;
+        height: 330px;
+        @include brd(#f7ece1);
+        overflow: hidden;
+
+        position: relative;
+    }
+
+    &__slider {
+        margin: 30px 25px;
+    }
+
+    // .swiper-slide {
+    // }
+
+    &__img {
+        width: 586px;
+        height: 270px;
+        overflow: hidden;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &__name {
+        position: absolute;
+        left: 40px;
+        bottom: 70px;
+        // top: auto;
+
+        font-size: 27px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #fff;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        width: 45px;
+        height: 45px;
+        flex-grow: 0;
+        margin: 0 0 0 0;
+        padding: 0;
+        background-color: #8d86c9;
+        &:after {
+            transform: scale(0.5);
+            color: #fff;
+        }
+    }
+
+    .swiper-button-prev {
+        position: absolute;
+        top: 0;
+        right: 50px;
+        left: auto;
+    }
+    .swiper-button-next {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: auto;
+    }
+}
+
+//! формы
+
+.forms {
+    width: 100%;
+
+    &__title {
+        @extend %titleText;
+    }
+
+    &__row {
+        width: 100%;
+        @extend %flexSpaceB;
+        align-items: start;
+
+        @media screen and (max-width: 632px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            > div {
+                margin-bottom: 45px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    p {
+        font-size: 18px;
+        padding-bottom: 20px;
+    }
+
+    &__subtext {
+        opacity: 0.3;
+        font-size: 12px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.4;
+        letter-spacing: normal;
+        text-align: left;
+        color: #333;
+    }
+}
+
+.left {
+    &__row {
+        > div {
+            margin-bottom: 40px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    input {
+        @include brd(#f0d9c2);
+        padding: 10px;
+        background-color: #f7ece1;
+    }
+
+    &__password {
+    }
+}
+
+.middle {
+    &__row {
+    }
+
+    input[type="radio"] {
+        margin-right: 20px;
+    }
+}
+
+.right {
+    &__row {
+        > div {
+            margin-bottom: 40px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__tarea {
+        textarea {
+            @include brd(#f0d9c2);
+            padding: 10px;
+            background-color: #f7ece1;
+            height: 200px;
+            resize: none;
+        }
+    }
+
+    &__submit {
+        input[type="submit"] {
+            @include brd(#f0d9c2);
+            padding: 10px;
+            background-color: #f7ece1;
+        }
+    }
+}
+
+//! футер
+
+@import "footer";

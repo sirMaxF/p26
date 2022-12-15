@@ -1759,7 +1759,7 @@ body._lock {
 }
 
 .right__row > div {
-  margin-bottom: 40px;
+  margin-bottom: 300px;
 }
 .right__row > div:last-child {
   margin-bottom: 0;
@@ -1781,6 +1781,17 @@ body._lock {
   background-color: #f7ece1;
   padding: 38px 0;
 }
+@media screen and (max-width: 770px) {
+  .footer__row {
+    flex-direction: column;
+  }
+  .footer__row > * {
+    margin-bottom: 30px;
+  }
+  .footer__row > *:last-child {
+    margin-bottom: 0;
+  }
+}
 .footer__copyright {
   opacity: 0.3;
   font-size: 14px;
@@ -1792,11 +1803,29 @@ body._lock {
   text-align: left;
   color: #333;
 }
+@media screen and (max-width: 770px) {
+  .footer__nav {
+    flex-direction: column;
+  }
+}
 .footer__menu li {
   margin-right: 40px;
 }
+@media screen and (max-width: 924px) {
+  .footer__menu li {
+    margin-right: 20px;
+  }
+}
 .footer__menu li:last-child {
   margin-right: 0;
+}
+@media screen and (max-width: 770px) {
+  .footer__menu {
+    display: none;
+  }
+}
+.footer__menu._active {
+  display: block;
 }
 .footer__link {
   font-size: 14px;
@@ -1819,4 +1848,12 @@ body._lock {
   width: 36px;
   height: 36px;
   background: url("../img/Vector.svg") no-repeat center center;
+}
+.footer__title {
+  display: none;
+}
+@media screen and (max-width: 770px) {
+  .footer__title {
+    display: block;
+  }
 }

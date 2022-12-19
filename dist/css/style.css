@@ -1851,6 +1851,7 @@ body._lock {
 }
 .footer__title {
   display: none;
+  color: red;
 }
 @media screen and (max-width: 770px) {
   .footer__title {

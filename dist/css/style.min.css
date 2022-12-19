@@ -1778,7 +1778,7 @@ body._lock {
 }
 
 .footer {
-  background-color: #f7ece1;
+  background-color: yellow;
   padding: 38px 0;
 }
 @media screen and (max-width: 770px) {

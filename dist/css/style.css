@@ -937,6 +937,22 @@ body._lock {
   padding: 0 15px;
 }
 
+.upbutton {
+  display: none;
+  padding: 10px;
+  background-color: #8d86c9;
+  color: #fff;
+  text-transform: uppercase;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 5000;
+  opacity: 0.5;
+}
+.upbutton._active {
+  display: block;
+}
+
 .header {
   position: relative;
   width: 100%;
@@ -1759,7 +1775,7 @@ body._lock {
 }
 
 .right__row > div {
-  margin-bottom: 300px;
+  margin-bottom: 30px;
 }
 .right__row > div:last-child {
   margin-bottom: 0;
